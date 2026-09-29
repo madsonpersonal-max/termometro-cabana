@@ -1,0 +1,9 @@
+{
+  "name":"Termômetro Cabana",
+  "short_name":"Termômetro Cabana",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#f5f3ee",
+  "theme_color":"#174f43",
+  "icons":[]
+}
