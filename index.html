@@ -1,62 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Termômetro Cabana</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div id="app"><main class="public-main">
-    <section id="tablet" class="page active public-tablet">
-      <div class="tablet-shell">
-        <div id="step-start" class="step active">
-          <div class="icon-circle">°</div>
-          <h1>Como está o clima do seu setor hoje?</h1>
-          <p class="privacy">Sua resposta é anônima.</p>
-          <button class="primary huge" id="startBtn">RESPONDER</button>
-          <p class="hint">Leva menos de 10 segundos.</p>
-        </div>
-
-        <div id="step-sector" class="step">
-          <div class="step-label">01 / 03</div>
-          <h2>Qual é o seu setor?</h2>
-          <div id="sectorGrid" class="grid sectors"></div>
-          <button class="back" data-back="start">Voltar</button>
-        </div>
-
-        <div id="step-climate" class="step">
-          <div class="step-label">02 / 03</div>
-          <h2>Como está o clima hoje?</h2>
-          <div class="climate-grid">
-            <button class="climate very-good" data-value="5">MUITO BOM</button>
-            <button class="climate good" data-value="4">BOM</button>
-            <button class="climate neutral" data-value="3">NORMAL</button>
-            <button class="climate bad" data-value="2">RUIM</button>
-            <button class="climate very-bad" data-value="1">MUITO RUIM</button>
-          </div>
-          <button class="back" data-back="sector">Voltar</button>
-        </div>
-
-        <div id="step-reason" class="step">
-          <div class="step-label">03 / 03</div>
-          <h2>O que está influenciando o clima?</h2>
-          <p class="optional">Opcional — você pode pular.</p>
-          <div id="reasonGrid" class="grid reasons"></div>
-          <button class="primary" id="finishBtn">FINALIZAR SEM MOTIVO</button>
-          <button class="back" data-back="climate">Voltar</button>
-        </div>
-
-        <div id="step-thanks" class="step">
-          <div class="success">✓</div>
-          <h1>Obrigado!</h1>
-          <p>Sua percepção ajuda o Cabana a melhorar.</p>
-          <div class="mini-progress"></div>
-        </div>
-      </div>
-    </section></main>
-</div>
-<script src="app.js"></script>
-<div class="public-note">Resposta anônima • Termômetro Cabana</div>
-</body>
-</html>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Termômetro Cabana</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#174f43"><link rel="stylesheet" href="style.css"></head><body><main class="employee"><div class="card">
+<section id="pageStart" class="page"><div class="brandmark">°</div><h1>Como está o clima do seu setor hoje?</h1><p class="muted">Sua resposta é anônima.</p><button id="startBtn" class="primary">RESPONDER</button><small>Leva menos de 10 segundos.</small></section>
+<section id="pageSector" class="page hidden"><div class="step">1 de 3</div><h2>Qual é o seu setor?</h2><div id="sectorGrid" class="options"></div></section>
+<section id="pageClimate" class="page hidden"><div class="step">2 de 3</div><h2>Como está o clima hoje?</h2><div class="options"><button class="option" data-score="5">Muito bom</button><button class="option" data-score="4">Bom</button><button class="option" data-score="3">Normal</button><button class="option" data-score="2">Ruim</button><button class="option" data-score="1">Muito ruim</button></div></section>
+<section id="pageReason" class="page hidden"><div class="step">3 de 3</div><h2>Quer indicar um motivo?</h2><p class="muted">Opcional.</p><div id="reasonGrid" class="options"></div><button id="skipReason" class="secondary">Pular</button></section>
+<section id="pageThanks" class="page hidden"><div class="success">✓</div><h2>Obrigado!</h2><p class="muted">Sua resposta foi registrada de forma anônima.</p><p id="saveStatus" class="muted"></p></section>
+</div></main><script src="config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js"></script></body></html>
