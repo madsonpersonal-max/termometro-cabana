@@ -1,79 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Termômetro Cabana — Administração</title>
 <link rel="stylesheet" href="../style.css">
 <style>
-.admin-wrap{max-width:1380px;margin:auto;padding:28px}
-.admin-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:20px}.admin-head h1{font-size:28px;margin:0}.admin-head p{margin:5px 0;color:#6d7c77}.admin-nav{display:flex;gap:7px}.admin-nav button{padding:10px 14px;border-radius:8px;background:#fff;border:1px solid #dfe6e2}.admin-nav button.active{background:#173f35;color:#fff}
-.filters{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap}.filter{padding:9px 13px;border-radius:8px;background:#fff;border:1px solid #dfe6e2;cursor:pointer}.filter.active{background:#173f35;color:#fff}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.kpi{background:#fff;border:1px solid #dfe6e2;border-radius:14px;padding:19px}.kpi .label{color:#6d7c77;font-size:13px}.kpi .value{font-size:28px;font-weight:800;margin-top:8px}.kpi .sub{font-size:12px;color:#6d7c77;margin-top:5px}
-.panel{background:#fff;border:1px solid #dfe6e2;border-radius:14px;padding:20px;margin-bottom:18px}.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}.panel h2{font-size:17px;margin:0}.muted{color:#6d7c77;font-size:12px}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}.three-col{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:18px}
-.chart-box{min-height:280px}.chart-svg{width:100%;height:280px;display:block}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#6d7c77;margin-top:8px}.legend span{display:flex;align-items:center;gap:6px}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.dot.pos{background:#2e7d5a}.dot.neu{background:#8a9892}.dot.neg{background:#b94b3d}
-.bar-row{margin:13px 0}.bar-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;gap:10px}.bar-bg{height:9px;background:#edf0ee;border-radius:20px;overflow:hidden}.bar-fill{height:100%;background:#173f35;border-radius:20px}
-.sector-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.sector-card{border:1px solid #e1e7e4;border-radius:12px;padding:14px;background:#fbfcfb}.sector-card .top{display:flex;justify-content:space-between;gap:12px;align-items:center}.sector-name{font-size:13px;font-weight:700}.sector-score{font-size:18px;font-weight:800}.sector-meta{font-size:11px;color:#6d7c77;margin-top:4px}.sector-bar{height:8px;background:#edf0ee;border-radius:20px;margin-top:10px;overflow:hidden}.sector-bar i{display:block;height:100%;background:#173f35;border-radius:20px}.attention{margin-top:9px;font-size:11px;color:#8a5b00}.good{color:#1e7049}
-.alert-box{background:#fff9e8;border:1px solid #f0dfaa;border-radius:12px;padding:14px;font-size:13px;color:#705400}.empty{color:#6d7c77;padding:18px;text-align:center}
-.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid #dfe6e2;font-size:14px}th{color:#6d7c77;font-size:12px;text-transform:uppercase}
-.badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:800}.up{background:#e2f3e8;color:#1e7049}.down{background:#ffe4e0;color:#a83e32}.flat{background:#eef0ef;color:#66736e}
-#adminLogin{min-height:100vh;display:grid;place-items:center}.login{background:#fff;padding:34px;border-radius:18px;border:1px solid #dfe6e2;width:min(420px,90%);box-shadow:0 10px 40px #173f3512}.login h1{font-size:25px}.login input{width:100%;padding:13px;border:1px solid #dfe6e2;border-radius:9px;margin:8px 0 12px}.login button{width:100%;padding:13px;background:#173f35;color:#fff;border-radius:9px;font-weight:800}.error{color:#a83e32;font-size:13px;min-height:18px}
-@media(max-width:1050px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.three-col{grid-template-columns:1fr 1fr}.sector-grid{grid-template-columns:1fr}}
-@media(max-width:750px){.two-col,.three-col{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr}.admin-head{display:block}.admin-nav{margin-top:15px}.admin-wrap{padding:16px}}
+body{background:#f5f3ee}.admin{max-width:1200px;margin:auto;padding:28px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.brand{font-size:25px;font-weight:800}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px}.tab{padding:10px 15px;border:1px solid #d9e1dd;border-radius:10px;background:white;cursor:pointer}.tab.active{background:#174f43;color:#fff}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric,.panel{background:#fff;border:1px solid #e2e7e4;border-radius:16px;padding:18px}.metric small{display:block}.metric strong{font-size:30px;display:block;margin-top:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.panel h2{margin-top:0}.barrow{margin:14px 0}.barhead{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}.track{height:12px;background:#edf1ef;border-radius:20px;overflow:hidden}.fill{height:100%;background:#174f43;border-radius:20px}.sector{display:grid;grid-template-columns:230px 1fr 70px 90px;gap:12px;align-items:center;margin:12px 0}.login{max-width:420px;margin:18vh auto;background:#fff;padding:30px;border-radius:18px}.login input{width:100%;padding:13px;margin:10px 0;border:1px solid #ccd7d2;border-radius:10px}.hidden{display:none!important}@media(max-width:800px){.cards,.grid2{grid-template-columns:1fr 1fr}.sector{grid-template-columns:1fr 1fr}}@media(max-width:520px){.cards,.grid2{grid-template-columns:1fr}.sector{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div id="adminLogin">
-  <div class="login">
-    <h1>Termômetro Cabana</h1>
-    <p>Área administrativa</p>
-    <input id="password" type="password" placeholder="Senha de teste">
-    <div id="error" class="error"></div>
-    <button id="loginBtn">ENTRAR</button>
-    <p style="font-size:12px;color:#6d7c77;margin-top:15px">Protótipo V1.2 — autenticação real será implementada na versão de produção.</p>
-  </div>
+<div id="login" class="login">
+<h1>Termômetro Cabana</h1><p>Área administrativa</p>
+<input id="email" type="email" placeholder="E-mail do administrador">
+<input id="password" type="password" placeholder="Senha">
+<button id="loginBtn" class="primary">ENTRAR</button>
+<p id="loginMsg" class="muted"></p>
 </div>
 
-<div id="adminApp" style="display:none">
-  <div class="admin-wrap">
-    <div class="admin-head">
-      <div><h1>Termômetro Cabana</h1><p>Dashboard de clima organizacional</p></div>
-      <div class="admin-nav"><button class="active" id="dashBtn">Dashboard</button><button id="histBtn">Histórico</button><button id="logoutBtn">Sair</button></div>
-    </div>
-
-    <div id="dashboardView">
-      <div class="filters">
-        <button class="filter active" data-period="today">Hoje</button>
-        <button class="filter" data-period="7">7 dias</button>
-        <button class="filter" data-period="30">30 dias</button>
-        <button class="filter" data-period="90">90 dias</button>
-      </div>
-
-      <div id="kpis" class="kpi-grid"></div>
-
-      <div class="two-col">
-        <div class="panel chart-box"><div class="panel-head"><h2>Clima geral</h2><span class="muted" id="generalPeriod"></span></div><div id="generalChart"></div><div class="legend"><span><i class="dot pos"></i>Positivo</span><span><i class="dot neu"></i>Neutro</span><span><i class="dot neg"></i>Negativo</span></div></div>
-        <div class="panel chart-box"><div class="panel-head"><h2>Distribuição geral</h2><span class="muted" id="responseCount"></span></div><div id="distribution"></div></div>
-      </div>
-
-      <div class="panel"><div class="panel-head"><h2>Clima por setor</h2><span class="muted">Índice médio de 1 a 5</span></div><div id="sectorGrid" class="sector-grid"></div></div>
-
-      <div class="three-col">
-        <div class="panel"><div class="panel-head"><h2>Principais fatores</h2></div><div id="reasons"></div></div>
-        <div class="panel"><div class="panel-head"><h2>Faixas de clima</h2></div><div id="climateBands"></div></div>
-        <div class="panel"><div class="panel-head"><h2>Atenção gerencial</h2></div><div id="alerts"></div></div>
-      </div>
-    </div>
-
-    <div id="historyView" style="display:none"><div class="panel"><div class="panel-head"><h2>Histórico de respostas</h2></div><div id="historyTable" class="table-wrap"></div></div></div>
-  </div>
+<div id="app" class="admin hidden">
+<header><div><div class="brand">Termômetro Cabana</div><div class="muted">Dashboard de clima organizacional</div></div><button id="logout" class="secondary" style="width:auto;margin:0">Sair</button></header>
+<div class="tabs">
+<button class="tab active" data-period="today">Hoje</button>
+<button class="tab" data-period="7">7 dias</button>
+<button class="tab" data-period="30">30 dias</button>
+<button class="tab" data-period="90">90 dias</button>
 </div>
+<section class="cards">
+<div class="metric"><small>Índice geral</small><strong id="overall">—</strong><small id="nTotal">0 respostas</small></div>
+<div class="metric"><small>Clima positivo</small><strong id="positive">0%</strong><small id="nPositive">0 respostas</small></div>
+<div class="metric"><small>Clima neutro</small><strong id="neutral">0%</strong><small id="nNeutral">0 respostas</small></div>
+<div class="metric"><small>Clima negativo</small><strong id="negative">0%</strong><small id="nNegative">0 respostas</small></div>
+</section>
+<div class="grid2">
+<section class="panel"><h2>Clima geral</h2><div id="generalBars"></div></section>
+<section class="panel"><h2>Distribuição geral</h2><div id="distribution"></div></section>
+</div>
+<section class="panel" style="margin-top:16px"><h2>Clima por setor</h2><div id="sectors"></div></section>
+<div class="grid2">
+<section class="panel"><h2>Principais fatores</h2><div id="reasons"></div></section>
+<section class="panel"><h2>Atenção gerencial</h2><div id="alerts"></div></section>
+</div>
+</div>
+<script src="../config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="admin.js"></script>
 </body>
 </html>
-<style>
-.stack-chart{height:245px;display:flex;align-items:flex-end;gap:12px;padding:12px 8px 4px;border-bottom:1px solid #dfe6e2;position:relative}
-.stack-chart:before{content:'100%';position:absolute;left:0;top:0;font-size:10px;color:#6d7c77}.stack-chart:after{content:'0%';position:absolute;left:0;bottom:0;font-size:10px;color:#6d7c77}
-.stack-col{height:100%;flex:1;min-width:25px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;position:relative}.stack-total{font-size:10px;color:#6d7c77;height:15px}.stack-bar{height:205px;width:min(42px,80%);display:flex;flex-direction:column-reverse;overflow:hidden;border-radius:5px 5px 0 0;background:#f0f2f1}.stack-bar i{display:block;width:100%;flex:none}.s-pos{background:#2e7d5a}.s-neu{background:#8a9892}.s-neg{background:#b94b3d}.stack-label{font-size:10px;color:#6d7c77;margin-top:7px;white-space:nowrap}
-</style>
