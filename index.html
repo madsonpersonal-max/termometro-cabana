@@ -3,119 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Termômetro Cabana</title>
-<link rel="stylesheet" href="style.css">
+<title>Termômetro Cabana — Administração</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.admin-wrap{max-width:1250px;margin:auto;padding:30px}
+.admin-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.admin-head h1{font-size:28px;margin:0}.admin-head p{margin:5px 0;color:#6d7c77}
+.admin-nav{display:flex;gap:7px}.admin-nav button{padding:10px 14px;border-radius:8px;background:#fff;border:1px solid #dfe6e2}.admin-nav button.active{background:#173f35;color:#fff}
+.filters{display:flex;gap:6px;margin-bottom:18px}.filter{padding:9px 13px;border-radius:8px;background:#fff;border:1px solid #dfe6e2}.filter.active{background:#173f35;color:#fff}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.kpi{background:#fff;border:1px solid #dfe6e2;border-radius:14px;padding:20px}.kpi .label{color:#6d7c77;font-size:13px}.kpi .value{font-size:28px;font-weight:800;margin-top:8px}.kpi .sub{font-size:12px;color:#6d7c77;margin-top:5px}
+.panel{background:#fff;border:1px solid #dfe6e2;border-radius:14px;padding:20px;margin-bottom:18px}.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.panel h2{font-size:17px;margin:0}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid #dfe6e2;font-size:14px}th{color:#6d7c77;font-size:12px;text-transform:uppercase}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}.bar-row{margin:13px 0}.bar-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}.bar-bg{height:9px;background:#edf0ee;border-radius:20px;overflow:hidden}.bar-fill{height:100%;background:#173f35;border-radius:20px}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:800}.up{background:#e2f3e8;color:#1e7049}.down{background:#ffe4e0;color:#a83e32}.flat{background:#eef0ef;color:#66736e}
+#adminLogin{min-height:100vh;display:grid;place-items:center}.login{background:#fff;padding:34px;border-radius:18px;border:1px solid #dfe6e2;width:min(420px,90%);box-shadow:0 10px 40px #173f3512}.login h1{font-size:25px}.login input{width:100%;padding:13px;border:1px solid #dfe6e2;border-radius:9px;margin:8px 0 12px}.login button{width:100%;padding:13px;background:#173f35;color:#fff;border-radius:9px;font-weight:800}.error{color:#a83e32;font-size:13px;min-height:18px}
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}}
+@media(max-width:650px){.kpi-grid{grid-template-columns:1fr}.admin-head{display:block}.admin-nav{margin-top:15px}}
+</style>
 </head>
 <body>
-<div id="app">
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark">CC</div>
-      <div>
-        <strong>TERMÔMETRO CABANA</strong>
-        <small>Clima Organizacional</small>
+<div id="adminLogin">
+  <div class="login">
+    <h1>Termômetro Cabana</h1>
+    <p>Área administrativa</p>
+    <input id="password" type="password" placeholder="Senha de teste">
+    <div id="error" class="error"></div>
+    <button id="loginBtn">ENTRAR</button>
+    <p style="font-size:12px;color:#6d7c77;margin-top:15px">Protótipo V1.1 — autenticação real será implementada na versão de produção.</p>
+  </div>
+</div>
+
+<div id="adminApp" style="display:none">
+  <div class="admin-wrap">
+    <div class="admin-head">
+      <div><h1>Termômetro Cabana</h1><p>Dashboard de clima organizacional</p></div>
+      <div class="admin-nav">
+        <button class="active" id="dashBtn">Dashboard</button>
+        <button id="histBtn">Histórico</button>
+        <button id="logoutBtn">Sair</button>
       </div>
     </div>
-    <nav>
-      <button class="nav-btn active" data-page="tablet">Tablet</button>
-      <button class="nav-btn" data-page="dashboard">Dashboard</button>
-      <button class="nav-btn" data-page="historico">Histórico</button>
-    </nav>
-  </header>
-
-  <main>
-    <section id="tablet" class="page active">
-      <div class="tablet-shell">
-        <div id="step-start" class="step active">
-          <div class="icon-circle">°</div>
-          <h1>Como está o clima do seu setor hoje?</h1>
-          <p class="privacy">Sua resposta é anônima.</p>
-          <button class="primary huge" id="startBtn">RESPONDER</button>
-          <p class="hint">Leva menos de 10 segundos.</p>
-        </div>
-
-        <div id="step-sector" class="step">
-          <div class="step-label">01 / 03</div>
-          <h2>Qual é o seu setor?</h2>
-          <div id="sectorGrid" class="grid sectors"></div>
-          <button class="back" data-back="start">Voltar</button>
-        </div>
-
-        <div id="step-climate" class="step">
-          <div class="step-label">02 / 03</div>
-          <h2>Como está o clima hoje?</h2>
-          <div class="climate-grid">
-            <button class="climate very-good" data-value="5">MUITO BOM</button>
-            <button class="climate good" data-value="4">BOM</button>
-            <button class="climate neutral" data-value="3">NORMAL</button>
-            <button class="climate bad" data-value="2">RUIM</button>
-            <button class="climate very-bad" data-value="1">MUITO RUIM</button>
-          </div>
-          <button class="back" data-back="sector">Voltar</button>
-        </div>
-
-        <div id="step-reason" class="step">
-          <div class="step-label">03 / 03</div>
-          <h2>O que está influenciando o clima?</h2>
-          <p class="optional">Opcional — você pode pular.</p>
-          <div id="reasonGrid" class="grid reasons"></div>
-          <button class="primary" id="finishBtn">FINALIZAR SEM MOTIVO</button>
-          <button class="back" data-back="climate">Voltar</button>
-        </div>
-
-        <div id="step-thanks" class="step">
-          <div class="success">✓</div>
-          <h1>Obrigado!</h1>
-          <p>Sua percepção ajuda o Cabana a melhorar.</p>
-          <div class="mini-progress"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="dashboard" class="page">
-      <div class="page-head">
-        <div>
-          <h1>Dashboard</h1>
-          <p>Visão geral do clima organizacional</p>
-        </div>
-        <div class="filters">
-          <button class="filter active" data-period="today">Hoje</button>
-          <button class="filter" data-period="7">7 dias</button>
-          <button class="filter" data-period="30">30 dias</button>
-          <button class="filter" data-period="90">90 dias</button>
-        </div>
+    <div id="dashboardView">
+      <div class="filters">
+        <button class="filter active" data-period="today">Hoje</button>
+        <button class="filter" data-period="7">7 dias</button>
+        <button class="filter" data-period="30">30 dias</button>
+        <button class="filter" data-period="90">90 dias</button>
       </div>
       <div id="kpis" class="kpi-grid"></div>
-      <div class="panel">
-        <div class="panel-head"><h2>Clima por setor</h2><span id="responseCount"></span></div>
-        <div id="sectorTable" class="table-wrap"></div>
-      </div>
+      <div class="panel"><div class="panel-head"><h2>Clima por setor</h2><span id="responseCount"></span></div><div id="sectorTable" class="table-wrap"></div></div>
       <div class="two-col">
-        <div class="panel">
-          <div class="panel-head"><h2>Distribuição das respostas</h2></div>
-          <div id="distribution" class="bars"></div>
-        </div>
-        <div class="panel">
-          <div class="panel-head"><h2>Principais fatores</h2></div>
-          <div id="reasons" class="bars"></div>
-        </div>
+        <div class="panel"><div class="panel-head"><h2>Distribuição das respostas</h2></div><div id="distribution"></div></div>
+        <div class="panel"><div class="panel-head"><h2>Principais fatores</h2></div><div id="reasons"></div></div>
       </div>
-    </section>
-
-    <section id="historico" class="page">
-      <div class="page-head">
-        <div>
-          <h1>Histórico</h1>
-          <p>Acompanhamento dos últimos registros</p>
-        </div>
-        <button class="danger" id="clearBtn">Limpar dados locais</button>
-      </div>
-      <div class="panel">
-        <div id="historyTable" class="table-wrap"></div>
-      </div>
-    </section>
-  </main>
+    </div>
+    <div id="historyView" style="display:none">
+      <div class="panel"><div class="panel-head"><h2>Histórico de respostas</h2></div><div id="historyTable" class="table-wrap"></div></div>
+    </div>
+  </div>
 </div>
-<script src="app.js"></script>
+<script src="admin.js"></script>
 </body>
 </html>
