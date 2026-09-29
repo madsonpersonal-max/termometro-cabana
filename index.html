@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termômetro Cabana</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">CC</div>
+      <div>
+        <strong>TERMÔMETRO CABANA</strong>
+        <small>Clima Organizacional</small>
+      </div>
+    </div>
+    <nav>
+      <button class="nav-btn active" data-page="tablet">Tablet</button>
+      <button class="nav-btn" data-page="dashboard">Dashboard</button>
+      <button class="nav-btn" data-page="historico">Histórico</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="tablet" class="page active">
+      <div class="tablet-shell">
+        <div id="step-start" class="step active">
+          <div class="icon-circle">°</div>
+          <h1>Como está o clima do seu setor hoje?</h1>
+          <p class="privacy">Sua resposta é anônima.</p>
+          <button class="primary huge" id="startBtn">RESPONDER</button>
+          <p class="hint">Leva menos de 10 segundos.</p>
+        </div>
+
+        <div id="step-sector" class="step">
+          <div class="step-label">01 / 03</div>
+          <h2>Qual é o seu setor?</h2>
+          <div id="sectorGrid" class="grid sectors"></div>
+          <button class="back" data-back="start">Voltar</button>
+        </div>
+
+        <div id="step-climate" class="step">
+          <div class="step-label">02 / 03</div>
+          <h2>Como está o clima hoje?</h2>
+          <div class="climate-grid">
+            <button class="climate very-good" data-value="5">MUITO BOM</button>
+            <button class="climate good" data-value="4">BOM</button>
+            <button class="climate neutral" data-value="3">NORMAL</button>
+            <button class="climate bad" data-value="2">RUIM</button>
+            <button class="climate very-bad" data-value="1">MUITO RUIM</button>
+          </div>
+          <button class="back" data-back="sector">Voltar</button>
+        </div>
+
+        <div id="step-reason" class="step">
+          <div class="step-label">03 / 03</div>
+          <h2>O que está influenciando o clima?</h2>
+          <p class="optional">Opcional — você pode pular.</p>
+          <div id="reasonGrid" class="grid reasons"></div>
+          <button class="primary" id="finishBtn">FINALIZAR SEM MOTIVO</button>
+          <button class="back" data-back="climate">Voltar</button>
+        </div>
+
+        <div id="step-thanks" class="step">
+          <div class="success">✓</div>
+          <h1>Obrigado!</h1>
+          <p>Sua percepção ajuda o Cabana a melhorar.</p>
+          <div class="mini-progress"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dashboard" class="page">
+      <div class="page-head">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Visão geral do clima organizacional</p>
+        </div>
+        <div class="filters">
+          <button class="filter active" data-period="today">Hoje</button>
+          <button class="filter" data-period="7">7 dias</button>
+          <button class="filter" data-period="30">30 dias</button>
+          <button class="filter" data-period="90">90 dias</button>
+        </div>
+      </div>
+      <div id="kpis" class="kpi-grid"></div>
+      <div class="panel">
+        <div class="panel-head"><h2>Clima por setor</h2><span id="responseCount"></span></div>
+        <div id="sectorTable" class="table-wrap"></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><h2>Distribuição das respostas</h2></div>
+          <div id="distribution" class="bars"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>Principais fatores</h2></div>
+          <div id="reasons" class="bars"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="historico" class="page">
+      <div class="page-head">
+        <div>
+          <h1>Histórico</h1>
+          <p>Acompanhamento dos últimos registros</p>
+        </div>
+        <button class="danger" id="clearBtn">Limpar dados locais</button>
+      </div>
+      <div class="panel">
+        <div id="historyTable" class="table-wrap"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
