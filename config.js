@@ -1,8 +1,6 @@
 // CONFIGURAÇÃO DO TERMÔMETRO CABANA
-// Cole aqui apenas a URL do projeto Supabase e a PUBLISHABLE KEY.
-// NUNCA coloque a SECRET/SERVICE_ROLE KEY neste arquivo.
 
 window.TERMOMETRO_CONFIG = {
-  SUPABASE_URL: "COLE_AQUI_A_URL_DO_SUPABASE",
-  SUPABASE_PUBLISHABLE_KEY: "COLE_AQUI_A_PUBLISHABLE_KEY"
+  SUPABASE_URL: "https://kucywlxsbufctrawzgyf.supabase.co",
+  SUPABASE_PUBLISHABLE_KEY: "sb_publishable_5XuvVFuZvLDl2Hkobj0QMQ_VLlcgZRX"
 };
