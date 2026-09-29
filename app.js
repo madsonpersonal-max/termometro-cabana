@@ -1,1 +1,31 @@
-const cfg=window.TERMOMETRO_CONFIG||{};const valid=cfg.SUPABASE_URL&&cfg.SUPABASE_URL.startsWith("https://")&&cfg.SUPABASE_PUBLISHABLE_KEY&&!cfg.SUPABASE_PUBLISHABLE_KEY.startsWith("COLE_");const db=valid?window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_PUBLISHABLE_KEY):null;const sectors=["Administração","Esporte / Academia","Segurança","Bar / Restaurante","Infraestrutura","Eventos","Comunicação / Marketing / Tecnologia","RH","Financeiro","Compras","Central de Atendimento","Outros"];const reasons=["Equipe","Liderança","Comunicação","Organização","Estrutura/materiais","Escala","Distribuição de tarefas","Remuneração/benefícios","Sobrecarga","Outro"];const $=id=>document.getElementById(id);let sector=null,score=null;function render(){$("sectorGrid").innerHTML=sectors.map(s=>`<button class="option" data-sector="${s}">${s}</button>`).join("");$("reasonGrid").innerHTML=reasons.map(r=>`<button class="option" data-reason="${r}">${r}</button>`).join("")}function show(id){document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));$(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}render();$("startBtn").onclick=()=>show("pageSector");$("sectorGrid").onclick=e=>{const b=e.target.closest("[data-sector]");if(!b)return;sector=b.dataset.sector;show("pageClimate")};$("pageClimate").onclick=e=>{const b=e.target.closest("[data-score]");if(!b)return;score=Number(b.dataset.score);show("pageReason")};async function save(reason=null){if(!db){$("saveStatus").textContent="Configuração do banco ainda não foi concluída.";show("pageThanks");return}const{error}=await db.from("termometro_respostas").insert({sector,score,reason});if(error){console.error(error);$("saveStatus").textContent="Não foi possível registrar agora. Tente novamente.";show("pageThanks");return}$("saveStatus").textContent="";show("pageThanks");setTimeout(reset,4500)}$("reasonGrid").onclick=e=>{const b=e.target.closest("[data-reason]");if(!b)return;save(b.dataset.reason)};$("skipReason").onclick=()=>save(null);function reset(){sector=null;score=null;$("saveStatus").textContent="";show("pageStart")}
+const sectors = [
+  "Administração","Esporte / Academia","Segurança","Bar / Restaurante",
+  "Infraestrutura","Eventos","Comunicação / Marketing / Tecnologia",
+  "RH","Financeiro","Compras","Central de Atendimento","Outros"
+];
+const reasons = [
+  "Equipe","Liderança","Comunicação","Organização","Estrutura / materiais",
+  "Escala","Distribuição de tarefas","Remuneração / benefícios","Sobrecarga","Outro"
+];
+let state={sector:null,value:null,reason:null};
+const $=id=>document.getElementById(id);
+function showStep(id){document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));$("step-"+id).classList.add("active")}
+function getData(){try{return JSON.parse(localStorage.getItem("cabana_clima")||"[]")}catch{return []}}
+function saveData(d){localStorage.setItem("cabana_clima",JSON.stringify(d))}
+function addResponse(){
+  const d=getData();
+  d.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),date:new Date().toISOString(),sector:state.sector,value:state.value,reason:state.reason});
+  saveData(d);
+}
+function populate(){
+  $("sectorGrid").innerHTML=sectors.map(s=>`<button data-sector="${s}">${s}</button>`).join("");
+  $("reasonGrid").innerHTML=reasons.map(r=>`<button data-reason="${r}">${r}</button>`).join("");
+  document.querySelectorAll("[data-sector]").forEach(b=>b.onclick=()=>{state.sector=b.dataset.sector;showStep("climate")});
+  document.querySelectorAll(".climate").forEach(b=>b.onclick=()=>{state.value=Number(b.dataset.value);state.reason=null;showStep("reason")});
+  document.querySelectorAll("[data-reason]").forEach(b=>b.onclick=()=>{state.reason=b.dataset.reason;finish()});
+}
+function finish(){addResponse();showStep("thanks");setTimeout(()=>{state={sector:null,value:null,reason:null};showStep("start")},2200)}
+$("startBtn").onclick=()=>showStep("sector");
+$("finishBtn").onclick=finish;
+document.querySelectorAll(".back").forEach(b=>b.onclick=()=>showStep(b.dataset.back));
+populate();

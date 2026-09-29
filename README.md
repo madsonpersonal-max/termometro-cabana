@@ -1,31 +1,25 @@
-# Termômetro Cabana V2.0 — banco central
+# Termômetro Cabana — V1.2
 
-Esta versão separa claramente:
-- `/` = terminal anônimo do colaborador
-- `/admin/` = painel administrativo autenticado
-- Supabase/Postgres = banco central compartilhado entre máquinas
+Protótipo do Termômetro Cabana com terminal anônimo para colaboradores e área administrativa separada.
 
-## 1. Criar o projeto
-Crie um projeto no Supabase.
+## Estrutura
+- `/` — terminal do colaborador
+- `/admin/` — painel administrativo
 
-## 2. Criar o banco
-Abra o SQL Editor e execute `supabase.sql`.
+## Dashboard V1.2
+- Visão geral do clima
+- Índice geral
+- Percentuais positivo/neutro/negativo
+- Gráfico de evolução do clima
+- Distribuição das avaliações
+- Clima por setor em cards/gráfico
+- Principais fatores
+- Faixas de clima
+- Alertas gerenciais
+- Filtros: hoje, 7, 30 e 90 dias
+- Histórico de respostas
 
-## 3. Criar o usuário do administrador
-No Supabase, abra Authentication > Users e crie o e-mail/senha que será usado no painel.
+## Protótipo
+A autenticação administrativa ainda usa senha de teste (`cabana2026`) no JavaScript. Os dados ainda usam `localStorage`, portanto não existe compartilhamento real entre tablet e computador.
 
-## 4. Configurar o site
-Abra `config.js` e coloque:
-- URL do projeto Supabase
-- Publishable Key
-
-Use somente a Publishable Key no navegador. Nunca coloque Secret/Service Role Key no GitHub.
-
-## 5. Publicar
-Envie os arquivos para o repositório GitHub Pages:
-index.html, style.css, app.js, config.js, manifest.webmanifest e a pasta admin.
-
-## Resultado
-Qualquer tablet/computador conectado à internet grava e consulta o mesmo banco central.
-
-A versão inicial não inclui fila offline. Se a internet cair, a resposta não é gravada até a conexão voltar.
+Para produção será necessário banco central/API e autenticação real.
