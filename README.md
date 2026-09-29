@@ -24,3 +24,12 @@ Esta V1 é um protótipo de validação de fluxo. Ainda não utiliza banco de da
 - regras definitivas de anonimato;
 - exportação de relatórios;
 - instalação do modo kiosk no tablet.
+
+
+## V1.1 — Separação de acesso
+
+- `/` = terminal público do colaborador.
+- `/admin/` = área administrativa do protótipo.
+- O colaborador não vê Dashboard/Histórico no terminal.
+- A senha presente nesta V1.1 é apenas uma barreira de protótipo e NÃO deve ser usada como segurança de produção.
+- A produção deverá usar autenticação real no servidor/API e banco central.

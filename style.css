@@ -49,3 +49,7 @@ h1{font-size:34px;margin:0 0 10px}.tablet-shell h2{font-size:30px;margin:8px 0 2
 .danger{background:#fff;color:#a83e32;border:1px solid #f0c8c3;padding:10px 14px;border-radius:8px}
 @media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.climate-grid{grid-template-columns:1fr}.tablet-shell{padding:28px 20px}.page{padding:20px}}
 @media(max-width:650px){.topbar{height:auto;padding:14px;display:block}.topbar nav{margin-top:10px}.sectors,.reasons{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr}.page-head{display:block}.filters{margin-top:15px}}
+
+.public-main{max-width:100%;padding:20px}
+.public-tablet{display:block}
+.public-note{position:fixed;bottom:10px;left:0;right:0;text-align:center;color:#7b8782;font-size:11px}
