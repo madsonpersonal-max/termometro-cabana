@@ -1,58 +1,7 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Termômetro Cabana</title>
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#174f43">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<main class="employee">
-  <div class="card">
-    <div class="brandmark">°</div>
-    <h1>Como está o clima do seu setor hoje?</h1>
-    <p class="muted">Sua resposta é anônima.</p>
-    <button id="startBtn" class="primary">RESPONDER</button>
-    <small>Leva menos de 10 segundos.</small>
-
-    <section id="survey" class="hidden">
-      <div class="step">1 de 3</div>
-      <h2>Qual é o seu setor?</h2>
-      <div id="sectorGrid" class="options"></div>
-
-      <div id="climateStep" class="hidden">
-        <div class="step">2 de 3</div>
-        <h2>Como está o clima hoje?</h2>
-        <div class="options">
-          <button class="option" data-score="5">Muito bom</button>
-          <button class="option" data-score="4">Bom</button>
-          <button class="option" data-score="3">Normal</button>
-          <button class="option" data-score="2">Ruim</button>
-          <button class="option" data-score="1">Muito ruim</button>
-        </div>
-      </div>
-
-      <div id="reasonStep" class="hidden">
-        <div class="step">3 de 3</div>
-        <h2>Quer indicar um motivo?</h2>
-        <p class="muted">Opcional.</p>
-        <div id="reasonGrid" class="options"></div>
-        <button id="skipReason" class="secondary">Pular</button>
-      </div>
-    </section>
-
-    <section id="thanks" class="hidden">
-      <div class="success">✓</div>
-      <h2>Obrigado!</h2>
-      <p class="muted">Sua resposta foi registrada de forma anônima.</p>
-      <p id="saveStatus" class="muted"></p>
-    </section>
-  </div>
-</main>
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js"></script>
-</body>
-</html>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Termômetro Cabana</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#174f43"><link rel="stylesheet" href="style.css"></head><body><main class="employee"><div class="card">
+<section id="pageStart" class="page"><div class="brandmark">°</div><h1>Como está o clima do seu setor hoje?</h1><p class="muted">Sua resposta é anônima.</p><button id="startBtn" class="primary">RESPONDER</button><small>Leva menos de 10 segundos.</small></section>
+<section id="pageSector" class="page hidden"><div class="step">1 de 3</div><h2>Qual é o seu setor?</h2><div id="sectorGrid" class="options"></div></section>
+<section id="pageClimate" class="page hidden"><div class="step">2 de 3</div><h2>Como está o clima hoje?</h2><div class="options"><button class="option" data-score="5">Muito bom</button><button class="option" data-score="4">Bom</button><button class="option" data-score="3">Normal</button><button class="option" data-score="2">Ruim</button><button class="option" data-score="1">Muito ruim</button></div></section>
+<section id="pageReason" class="page hidden"><div class="step">3 de 3</div><h2>Quer indicar um motivo?</h2><p class="muted">Opcional.</p><div id="reasonGrid" class="options"></div><button id="skipReason" class="secondary">Pular</button></section>
+<section id="pageThanks" class="page hidden"><div class="success">✓</div><h2>Obrigado!</h2><p class="muted">Sua resposta foi registrada de forma anônima.</p><p id="saveStatus" class="muted"></p></section>
+</div></main><script src="config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js"></script></body></html>
