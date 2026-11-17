@@ -1,50 +1,14 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Termômetro Cabana — Administração</title>
-<link rel="stylesheet" href="../style.css">
-<style>
-body{background:#f5f3ee}.admin{max-width:1200px;margin:auto;padding:28px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.brand{font-size:25px;font-weight:800}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px}.tab{padding:10px 15px;border:1px solid #d9e1dd;border-radius:10px;background:white;cursor:pointer}.tab.active{background:#174f43;color:#fff}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric,.panel{background:#fff;border:1px solid #e2e7e4;border-radius:16px;padding:18px}.metric small{display:block}.metric strong{font-size:30px;display:block;margin-top:8px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.panel h2{margin-top:0}.barrow{margin:14px 0}.barhead{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}.track{height:12px;background:#edf1ef;border-radius:20px;overflow:hidden}.fill{height:100%;background:#174f43;border-radius:20px}.sector{display:grid;grid-template-columns:230px 1fr 70px 90px;gap:12px;align-items:center;margin:12px 0}.login{max-width:420px;margin:18vh auto;background:#fff;padding:30px;border-radius:18px}.login input{width:100%;padding:13px;margin:10px 0;border:1px solid #ccd7d2;border-radius:10px}.hidden{display:none!important}@media(max-width:800px){.cards,.grid2{grid-template-columns:1fr 1fr}.sector{grid-template-columns:1fr 1fr}}@media(max-width:520px){.cards,.grid2{grid-template-columns:1fr}.sector{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div id="login" class="login">
-<h1>Termômetro Cabana</h1><p>Área administrativa</p>
-<input id="email" type="email" placeholder="E-mail do administrador">
-<input id="password" type="password" placeholder="Senha">
-<button id="loginBtn" class="primary">ENTRAR</button>
-<p id="loginMsg" class="muted"></p>
-</div>
-
-<div id="app" class="admin hidden">
-<header><div><div class="brand">Termômetro Cabana</div><div class="muted">Dashboard de clima organizacional</div></div><button id="logout" class="secondary" style="width:auto;margin:0">Sair</button></header>
-<div class="tabs">
-<button class="tab active" data-period="today">Hoje</button>
-<button class="tab" data-period="7">7 dias</button>
-<button class="tab" data-period="30">30 dias</button>
-<button class="tab" data-period="90">90 dias</button>
-</div>
-<section class="cards">
-<div class="metric"><small>Índice geral</small><strong id="overall">—</strong><small id="nTotal">0 respostas</small></div>
-<div class="metric"><small>Clima positivo</small><strong id="positive">0%</strong><small id="nPositive">0 respostas</small></div>
-<div class="metric"><small>Clima neutro</small><strong id="neutral">0%</strong><small id="nNeutral">0 respostas</small></div>
-<div class="metric"><small>Clima negativo</small><strong id="negative">0%</strong><small id="nNegative">0 respostas</small></div>
-</section>
-<div class="grid2">
-<section class="panel"><h2>Clima geral</h2><div id="generalBars"></div></section>
-<section class="panel"><h2>Distribuição geral</h2><div id="distribution"></div></section>
-</div>
-<section class="panel" style="margin-top:16px"><h2>Clima por setor</h2><div id="sectors"></div></section>
-<div class="grid2">
-<section class="panel"><h2>Principais fatores</h2><div id="reasons"></div></section>
-<section class="panel"><h2>Atenção gerencial</h2><div id="alerts"></div></section>
-</div>
-</div>
-<script src="../config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="admin.js"></script>
-</body>
-</html>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Restaurante Cabana Clube — Pesquisa</title><link rel="stylesheet" href="../style.css"><style>
+body{background:#f5f1eb}.admin{max-width:1180px;margin:auto;padding:24px}.login{max-width:420px;margin:15vh auto;background:#fff;padding:30px;border-radius:18px}.login input{width:100%;padding:13px;margin:10px 0;border:1px solid #d9d2ca;border-radius:10px}.admin-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}.admin-header h1{font-size:25px;color:#753f30;margin:0}.muted{color:#737b75}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric,.panel{background:#fff;border:1px solid #e8e1d9;border-radius:15px;padding:18px}.metric small{display:block;color:#707970}.metric strong{font-size:29px;display:block;margin:7px 0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.panel{margin-top:14px}.panel h2{font-size:18px;margin:0 0 16px;color:#704532}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{border:1px solid #ddd2c8;border-radius:9px;background:white;padding:9px 13px}.tab.active{background:#a85d42;color:#fff;border-color:#a85d42}.barrow{margin:12px 0}.barhead{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin-bottom:6px}.track{height:10px;background:#f0ece7;border-radius:20px;overflow:hidden}.fill{height:100%;background:#a85d42}.taglist{display:flex;flex-wrap:wrap;gap:8px}.tag{background:#f8f1ec;border-radius:20px;padding:8px 11px;font-size:13px}.comment{border-top:1px solid #eee5de;padding:12px 0;font-size:14px}.logout{background:#fff;border:1px solid #ddd2c8;border-radius:9px;padding:10px 14px}.hidden{display:none!important}@media(max-width:760px){.cards{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.admin{padding:15px}.admin-header h1{font-size:20px}}@media(max-width:430px){.cards{grid-template-columns:1fr 1fr}.metric strong{font-size:23px}}
+</style></head><body>
+<div id="login" class="login"><h1>Restaurante Cabana Clube</h1><p class="muted">Painel administrativo da pesquisa</p><input id="email" type="email" placeholder="E-mail do administrador"><input id="password" type="password" placeholder="Senha"><button id="loginBtn" class="primary" style="width:100%">ENTRAR</button><p id="loginMsg" class="muted"></p></div>
+<main id="app" class="admin hidden"><header class="admin-header"><div><h1>Pesquisa do Restaurante</h1><div class="muted">Preferências, satisfação e oportunidades de melhoria</div></div><button id="logout" class="logout">Sair</button></header>
+<div class="tabs"><button class="tab active" data-period="30">30 dias</button><button class="tab" data-period="90">90 dias</button><button class="tab" data-period="all">Todo período</button><button class="tab" data-period="today">Hoje</button></div>
+<section class="cards"><div class="metric"><small>Respostas recebidas</small><strong id="total">0</strong></div><div class="metric"><small>Associados e dependentes</small><strong id="members">0%</strong></div><div class="metric"><small>Avaliação média do buffet</small><strong id="buffetAvg">—</strong></div><div class="metric"><small>Consideram o preço justo</small><strong id="priceFair">0%</strong></div></section>
+<div class="grid2"><section class="panel"><h2>Frequência de visitas</h2><div id="frequency"></div></section><section class="panel"><h2>O que influencia a escolha</h2><div id="choiceFactors"></div></section></div>
+<div class="grid2"><section class="panel"><h2>Preferências gastronômicas</h2><div id="foodPreferences"></div></section><section class="panel"><h2>Carnes mais desejadas</h2><div id="meats"></div></section></div>
+<div class="grid2"><section class="panel"><h2>O que não pode faltar no buffet</h2><div id="buffetItems"></div></section><section class="panel"><h2>Interesse em dias especiais</h2><div id="specialDays"></div></section></div>
+<div class="grid2"><section class="panel"><h2>O que faria o cliente voltar mais vezes</h2><div id="returnReasons"></div></section><section class="panel"><h2>O que precisa melhorar</h2><div id="improvements"></div></section></div>
+<section class="panel"><h2>Avaliação dos aspectos do restaurante</h2><div id="ratings"></div></section>
+<section class="panel"><h2>Sugestões dos clientes</h2><div id="comments"></div></section>
+</main><script src="../config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin.js"></script></body></html>
