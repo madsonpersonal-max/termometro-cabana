@@ -1,50 +1,15 @@
-const cfg=window.TERMOMETRO_CONFIG||{};
-const valid=cfg.SUPABASE_URL&&cfg.SUPABASE_URL.startsWith("https://")&&cfg.SUPABASE_PUBLISHABLE_KEY&&!cfg.SUPABASE_PUBLISHABLE_KEY.startsWith("COLE_");
-const db=valid?window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_PUBLISHABLE_KEY):null;
-let period="today", allRows=[];
-
-const fmtPct=(n,total)=>total?Math.round(n*100/total)+"%":"0%";
-const periodStart=()=>{
-  const d=new Date(); d.setHours(0,0,0,0);
-  if(period==="today") return d;
-  d.setDate(d.getDate()-Number(period)+1); return d;
-};
-async function load(){
-  if(!db){$("loginMsg").textContent="Configure o Supabase em config.js.";return;}
-  const {data,error}=await db.from("termometro_respostas").select("sector,score,reason,created_at").gte("created_at",periodStart().toISOString()).order("created_at",{ascending:false});
-  if(error){console.error(error); $("loginMsg").textContent=error.message; return;}
-  allRows=data||[]; render();
-}
-const $=id=>document.getElementById(id);
-function render(){
-  const rows=allRows,n=rows.length;
-  const avg=n?rows.reduce((s,r)=>s+r.score,0)/n:0;
-  $("overall").textContent=n?avg.toFixed(1)+"/5":"—";
-  const pos=rows.filter(r=>r.score>=4).length, neu=rows.filter(r=>r.score===3).length, neg=rows.filter(r=>r.score<=2).length;
-  $("positive").textContent=fmtPct(pos,n);$("neutral").textContent=fmtPct(neu,n);$("negative").textContent=fmtPct(neg,n);
-  $("nTotal").textContent=n+" respostas";$("nPositive").textContent=pos+" respostas";$("nNeutral").textContent=neu+" respostas";$("nNegative").textContent=neg+" respostas";
-  const counts=[5,4,3,2,1].map(score=>({score,n:rows.filter(r=>r.score===score).length}));
-  $("generalBars").innerHTML=counts.map(x=>bar("Nota "+x.score,x.n,n)).join("");
-  $("distribution").innerHTML=[
-    ["Positivo",pos],["Neutro",neu],["Negativo",neg]
-  ].map(x=>bar(x[0],x[1],n)).join("");
-  const map={}; rows.forEach(r=>{map[r.sector]??=[];map[r.sector].push(r)});
-  $("sectors").innerHTML=Object.entries(map).sort((a,b)=>avgOf(b[1])-avgOf(a[1])).map(([s,rs])=>{
-    const a=avgOf(rs); return `<div class="sector"><b>${esc(s)}</b><div class="track"><div class="fill" style="width:${a/5*100}%"></div></div><strong>${a.toFixed(1)}</strong><span>${rs.length} resp.</span></div>`;
-  }).join("")||"<p class='muted'>Sem respostas no período.</p>";
-  const rm={};rows.forEach(r=>{if(r.reason)rm[r.reason]=(rm[r.reason]||0)+1});
-  $("reasons").innerHTML=Object.entries(rm).sort((a,b)=>b[1]-a[1]).slice(0,8).map(x=>bar(x[0],x[1],n)).join("")||"<p class='muted'>Nenhum motivo informado.</p>";
-  $("alerts").innerHTML=Object.entries(map).map(([s,rs])=>[s,avgOf(rs),rs.length]).filter(x=>x[2]>=5&&x[1]<3.2).sort((a,b)=>a[1]-b[1]).map(x=>`<div class="barrow"><b>${esc(x[0])}</b><div class="muted">Índice ${x[1].toFixed(1)} com ${x[2]} respostas.</div></div>`).join("")||"<p class='muted'>Nenhum alerta com o critério atual.</p>";
-}
-function avgOf(rs){return rs.reduce((s,r)=>s+r.score,0)/rs.length}
-function bar(label,val,total){return `<div class="barrow"><div class="barhead"><span>${esc(label)}</span><b>${val}${total?" ("+fmtPct(val,total)+")":""}</b></div><div class="track"><div class="fill" style="width:${total?val/total*100:0}%"></div></div></div>`}
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-$("loginBtn").onclick=async()=>{
-  if(!db){$("loginMsg").textContent="Configure primeiro o Supabase em config.js.";return;}
-  const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
-  if(error){$("loginMsg").textContent="E-mail ou senha inválidos.";return;}
-  $("login").classList.add("hidden");$("app").classList.remove("hidden");load();
-};
-$("logout").onclick=async()=>{await db.auth.signOut();location.reload()};
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");period=b.dataset.period;load()});
-if(db) db.auth.getSession().then(({data})=>{if(data.session){$("login").classList.add("hidden");$("app").classList.remove("hidden");load()}});
+const cfg=window.TERMOMETRO_CONFIG||{};const valid=cfg.SUPABASE_URL&&cfg.SUPABASE_URL.startsWith("https://")&&cfg.SUPABASE_PUBLISHABLE_KEY;const db=valid?window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_PUBLISHABLE_KEY):null;const $=id=>document.getElementById(id);let period="30",rows=[];
+function startDate(){if(period==="all")return null;const d=new Date();if(period==="today")d.setHours(0,0,0,0);else d.setDate(d.getDate()-Number(period)+1);return d.toISOString();}
+async function load(){if(!db){$("loginMsg").textContent="Configuração do Supabase não encontrada.";return;}let q=db.from("restaurante_pesquisa_respostas").select("created_at,respondent_type,answers").order("created_at",{ascending:false});const since=startDate();if(since)q=q.gte("created_at",since);const{data,error}=await q;if(error){console.error(error);$("loginMsg").textContent="Erro ao carregar pesquisa: "+error.message;return;}rows=data||[];render();}
+const pct=(n,total)=>total?Math.round(n*100/total)+"%":"0%";
+function tally(key){const counts={};rows.forEach(r=>(Array.isArray(r.answers?.[key])?r.answers[key]:r.answers?.[key]?[r.answers[key]]:[]).forEach(v=>counts[v]=(counts[v]||0)+1));return Object.entries(counts).sort((a,b)=>b[1]-a[1]);}
+function bars(id,items){const max=Math.max(1,...items.map(x=>x[1]));$(id).innerHTML=items.length?items.map(([label,n])=>'<div class="barrow"><div class="barhead"><span>'+esc(label)+'</span><b>'+n+' ('+pct(n,rows.length)+')</b></div><div class="track"><div class="fill" style="width:'+(n/max*100)+'%"></div></div></div>').join():"<p class='muted'>Ainda sem respostas.</p>";}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function render(){const n=rows.length;$("total").textContent=n;const member=rows.filter(r=>["Sim, titular","Sim, dependente"].includes(r.answers?.member)).length;$("members").textContent=pct(member,n);const avgItems=rows.map(r=>Object.values(r.answers?.quality_ratings||{})).flat().filter(Number.isFinite);$("buffetAvg").textContent=avgItems.length?(avgItems.reduce((a,b)=>a+b,0)/avgItems.length).toFixed(1)+"/5":"—";const fair=rows.filter(r=>["Muito justo","Justo"].includes(r.answers?.price_fair)).length;$("priceFair").textContent=pct(fair,n);
+bars("frequency",tally("frequency"));bars("choiceFactors",tally("choice_factors"));bars("foodPreferences",tally("food_preference"));bars("meats",tally("meats"));bars("buffetItems",tally("buffet_items"));bars("specialDays",tally("special_days"));bars("returnReasons",tally("return_reasons"));bars("improvements",tally("improvements"));
+const keys=["Sabor da comida","Qualidade das carnes","Temperatura dos alimentos","Apresentação do buffet","Reposição dos alimentos","Higiene e organização"];$("ratings").innerHTML=keys.map(k=>{const vals=rows.map(r=>r.answers?.quality_ratings?.[k]).filter(Number.isFinite);const a=vals.length?vals.reduce((x,y)=>x+y,0)/vals.length:null;return '<div class="barrow"><div class="barhead"><span>'+k+'</span><b>'+(a===null?"—":a.toFixed(1)+"/5")+'</b></div><div class="track"><div class="fill" style="width:'+(a===null?0:a*20)+'%"></div></div></div>';}).join();
+const comments=rows.map(r=>r.answers?.suggestion).filter(x=>typeof x==="string"&&x.trim());$("comments").innerHTML=n<5?"<p class='muted'>As sugestões serão exibidas quando houver pelo menos 5 respostas, para preservar a privacidade.</p>":comments.length?comments.map(c=>'<div class="comment">'+esc(c)+'</div>').join():"<p class='muted'>Nenhuma sugestão escrita até agora.</p>";}
+$("loginBtn").onclick=async()=>{if(!db){$("loginMsg").textContent="Configuração do Supabase não encontrada.";return;}const{error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error){$("loginMsg").textContent="E-mail ou senha inválidos.";return;}$("login").classList.add("hidden");$("app").classList.remove("hidden");load();};
+$("logout").onclick=async()=>{await db.auth.signOut();location.reload();};
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");period=b.dataset.period;load();});
+if(db)db.auth.getSession().then(({data})=>{if(data.session){$("login").classList.add("hidden");$("app").classList.remove("hidden");load();}});
