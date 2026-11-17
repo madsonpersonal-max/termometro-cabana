@@ -32,6 +32,6 @@ function capture(){const q=questions[index];if(q.type==="text")answers[q.id]=$("
 function validAnswer(){const q=questions[index];capture();if(q.optional)return true;if(q.type==="single")return !!answers[q.id];if(q.type==="multi")return Array.isArray(answers[q.id])&&answers[q.id].length>0;if(q.type==="ratings")return q.items.every(x=>answers[q.id]?.[x]);if(q.type==="text")return !!answers[q.id];return true;}
 $("next").onclick=async()=>{if(!validAnswer()){alert("Selecione uma resposta para continuar.");return;}if(index<questions.length-1){index++;renderQuestion();window.scrollTo(0,0);}else await submit();};
 $("back").onclick=()=>{capture();if(index>0){index--;renderQuestion();}};
-$("skip").onclick=()=>{capture();index++;renderQuestion();};
+$("skip").onclick=async()=>{capture();if(index===questions.length-1){await submit();return;}index++;renderQuestion();};
 async function submit(){if(!db){$("errorText").textContent="A configuração do banco não foi encontrada. Avise a administração.";show("errorScreen");return;}show("sending");const payload={answers,respondent_type:answers.member||"Não informado"};const{error}=await db.from("restaurante_pesquisa_respostas").insert(payload);if(error){console.error(error);$("errorText").textContent="Não foi possível registrar: "+error.message;show("errorScreen");return;}show("thanks");}
 $("retry").onclick=submit;
