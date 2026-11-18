@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#a85d42"><title>Pesquisa dos Colaboradores | Cabana Clube</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="shell"><section class="card">
+<div class="brand">CABANA CLUBE</div><div class="eyebrow">PESQUISA ANÔNIMA · ALIMENTAÇÃO DOS COLABORADORES</div>
+<section id="welcome"><h1>Sua opinião importa!</h1><p>Queremos melhorar a qualidade das refeições oferecidas aos nossos colaboradores. Responda com sinceridade: sua participação é anônima.</p><div class="note">São 4 perguntas rápidas e um espaço opcional para sugestões. Não solicitamos nome, matrícula ou contato.</div><button id="begin" class="primary">COMEÇAR PESQUISA</button></section>
+<section id="form" class="hidden"><div class="progress"><span id="step"></span><div><i id="bar"></i></div></div><div id="question"></div><div class="actions"><button id="back" class="secondary">VOLTAR</button><button id="next" class="primary">CONTINUAR</button></div></section>
+<section id="sending" class="hidden"><h2>Registrando sua resposta...</h2></section>
+<section id="thanks" class="hidden"><div class="check">✓</div><h1>Obrigado pela participação!</h1><p>Sua opinião foi registrada anonimamente e contribuirá para melhorar as refeições da nossa equipe.</p></section>
+<section id="error" class="hidden"><h2>Não foi possível enviar</h2><p id="errorText"></p><button id="retry" class="primary">TENTAR NOVAMENTE</button></section>
+</section></main><script src="../config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js?v=1"></script></body></html>
